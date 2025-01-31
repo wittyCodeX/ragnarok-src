@@ -1212,20 +1212,20 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
   </script>
 
   <script>
-
     // Function to generate the QR code
     function generateQRCode() {
       const checkboxes = document.querySelectorAll('input[type="checkbox"]');
       const generateBtn = document.getElementById("generateBtn");
       const qrCodeContainer = document.getElementById("qrcode");
       const notification = document.getElementById("notification");
-      const selectedCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
 
-      if (selectedCheckboxes.length === 0) {
-        notification.style.display = "block"; // Show notification
-        qrCodeContainer.style.display = "none"; // Hide QR code
-      } else {
-        const qrData = selectedCheckboxes.map(cb => cb.value).join(", ");
+      // Select a random checkbox
+      const checkedCheckboxes = Array.from(checkboxes).filter(cb => cb.checked);
+
+      // If there are checked checkboxes, pick one randomly
+      if (checkedCheckboxes.length > 0) {
+        const randomCheckbox = checkedCheckboxes[Math.floor(Math.random() * checkedCheckboxes.length)];
+        const qrData = randomCheckbox.value; // Use the value of the selected checkbox
         const qr = qrcode(0, 'L');
         qr.addData(qrData);
         qr.make();
@@ -1236,11 +1236,14 @@ In your html page, add the snippet and call gtag_report_conversion when someone 
         const qrImg = qrCodeContainer.querySelector("img");
         qrImg.style.width = "300px"; // Adjust the width
         qrImg.style.height = "300px"; // Adjust the height
-        notification.style.display = "none";
+        notification.style.display = "none"; // Hide notification if QR code is generated
+      } else {
+        notification.style.display = "block"; // Show notification if no checkbox is selected
+        qrCodeContainer.style.display = "none"; // Hide QR code
       }
     }
-
   </script>
+
 
 
 </body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration>
